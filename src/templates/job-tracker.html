@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>SSE example with Pocketbase</title>
+	<script src="{{ url_for('static', path='/pocketbase-sdk.js') }}"></script>
+</head>
+<body>
+	<p>Job ID: {{ id }}</p>
+	<p>Current Status: <span id="job-status">{{ status }}</span></p>
+	<p>Started at: {{ created }}</p>
+	<p>Completed at: <span id="job-completed-at">{% if status == 'completed' %} {% endif %}</span></p>
+
+	<script type="text/javascript">
+		const pbClient = new PocketBase("http://localhost:8080");
+
+		pbClient.collection("jobs").subscribe("{{ id }}", function (e) {
+			document.getElementById("job-status").innerHTML = e.record.status;
+			document.getElementById("job-completed-at").innerHTML = e.record.updated;
+		});
+	</script>
+</body>
+</html>
