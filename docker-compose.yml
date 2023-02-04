@@ -12,8 +12,9 @@ services:
     expose:
       - '8000'
     restart: unless-stopped
+    depends_on:
+      - pocketbase
     command: uvicorn src.fast_server:app --host 0.0.0.0 --port 8000
-
   pocketbase:
     build:
       context: .
