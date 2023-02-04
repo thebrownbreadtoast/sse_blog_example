@@ -13,7 +13,7 @@
 	<p>Completed at: <span id="job-completed-at">{% if status == 'completed' %} {% endif %}</span></p>
 
 	<script type="text/javascript">
-		const pbClient = new PocketBase("http://localhost:8080");
+		const pbClient = new PocketBase("http://{{ host }}:8080");
 
 		pbClient.collection("jobs").subscribe("{{ id }}", function (e) {
 			document.getElementById("job-status").innerHTML = e.record.status;
